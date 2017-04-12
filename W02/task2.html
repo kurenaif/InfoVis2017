@@ -2,38 +2,43 @@
     <head>
         <title> Task2 </title>
     </head>
-    <body>
-        <foam name="fk" id="id_form1" action="">
-        v0
-        <input type="text" name="txtb" value="" />
-        <input type="text" name="x1" />
-        <input type="text" name="x2" />
-        <br>
-        v1
-        <input type="text" name="y0" />
-        <input type="text" name="y1" />
-        <input type="text" name="y2" />
-        <br>
-        v2
-        <input type="text" name="z0" />
-        <input type="text" name="z1" />
-        <input type="text" name="z2" />
-        <br>
-        <input type="button" onclick="OnButtonClick();" value="calc" />
-        </foam>
 
+    <body>
+        <form name="form1" id="id_form1" action="">
+            <input name="textBox1" id="x0" type="text" value="" />
+            <input name="textBox1" id="x1" type="text" value="" />
+            <input name="textBox1" id="x2" type="text" value="" />
+            <br>
+            <input name="textBox1" id="y0" type="text" value="" />
+            <input name="textBox1" id="y1" type="text" value="" />
+            <input name="textBox1" id="y2" type="text" value="" />
+            <br>
+            <input name="textBox1" id="z0" type="text" value="" />
+            <input name="textBox1" id="z1" type="text" value="" />
+            <input name="textBox1" id="z2" type="text" value="" />
+            <input type="button" value="Exec" onclick="onButtonClick();" />
+        </form>
+        <script src="vec3.js" ></script>
         <script type="text/javascript" language="javascript">
-         function OnButtonClick(){
-             var v = document.forms.id_form1.txtb.value;
-             window.alert('Click')
+         function onButtonClick() {
+             var x0 = parseFloat(document.forms.id_form1.x0.value);
+             var x1 = parseFloat(document.forms.id_form1.x1.value);
+             var x2 = parseFloat(document.forms.id_form1.x2.value);
+             var y0 = parseFloat(document.forms.id_form1.y0.value);
+             var y1 = parseFloat(document.forms.id_form1.y1.value);
+             var y2 = parseFloat(document.forms.id_form1.y2.value);
+             var z0 = parseFloat(document.forms.id_form1.z0.value);
+             var z1 = parseFloat(document.forms.id_form1.z1.value);
+             var z2 = parseFloat(document.forms.id_form1.z2.value);
+             target = document.getElementById("output");
+             var v0 = new Vec3(x0,x1,x2);
+             var v1 = new Vec3(y0,y1,y2);
+             var v2 = new Vec3(z0,z1,z2);
+             var ans = AreaOfTriangle(v0,v1,v2);
+             target.innerText = ans;
          }
         </script>
-        <script src="vec3.js"></script>
-        <script>
-         var v0 = new Vec3(0,0,1)
-         var v1 = new Vec3(0,5,0)
-         var v2 = new Vec3(0,1,0)
-         document.write("<br>ans:" + AreaOfTriangle(v0,v1,v2));
-        </script>
+        <hr />
+        <div id="output"></div>
     </body>
 </html>
