@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+  <form name="form1" id="id_form1" action="">
+    <input name="textBox1" id="id_textBox1" type="text" value="" />
+    <input type="button" value="Exec" onclick="onButtonClick();" />
+  </form>
+  <script type="text/javascript" language="javascript">
+        function onButtonClick() {
+          target = document.getElementById("output");
+          target.innerText = document.forms.id_form1.id_textBox1.value;
+             window.alert('Click')
+          //target.innerText = document.id_form1.id_textBox1.value;//これでもOK
+        }
+  </script>
+  <hr/>
+  <div id="output"></div>
+
+</body>
+</html>
+
