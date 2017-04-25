@@ -22,11 +22,23 @@ function main()
         [1, -1, 0],
         [-1, 1, 0],
         [1, 1, 0],
+        [1, -1, -2],
+        [1, 1, -2],
+        [-1, 1, -2],
+        [-1, -1, -2]
     ];
 
     var faces = [
         [0,1,2],
-        [1,3,2]
+        [1,3,2],
+        [0,2,7],
+        [7,2,6],
+        [5,2,3],
+        [5,6,2],
+        [1,4,3],
+        [4,5,3],
+        [1,0,7],
+        [1,7,4]
     ];
 
     var vectors = [];
@@ -46,7 +58,9 @@ function main()
     for (var i = 0;i<vectors.length;i++){
         geometry.vertices.push(vectors[i]);
     }
-    geometry.faces.push(face3s[0]);
+    for (var i=0;i<face3s.length;i++){
+        geometry.faces.push(face3s[i]);
+    }
 
     var material = new THREE.MeshBasicMaterial();
     // material.vertexColors = THREE.FaceColors;
@@ -63,8 +77,8 @@ function main()
     function loop()
     {
         requestAnimationFrame( loop );
-        triangle.rotation.x += 0.001;
-        triangle.rotation.y += 0.001;
+        triangle.rotation.x -= 0.005;
+        triangle.rotation.y -= 0.005;
         renderer.render( scene, camera );
     }
 }
