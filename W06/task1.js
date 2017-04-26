@@ -38,7 +38,9 @@ function main()
         [1,4,3],
         [4,5,3],
         [1,0,7],
-        [1,7,4]
+        [1,7,4],
+        [4,7,6],
+        [4,6,5],
     ];
 
     var vectors = [];
@@ -62,15 +64,21 @@ function main()
         geometry.faces.push(face3s[i]);
     }
 
-    var material = new THREE.MeshBasicMaterial();
+    //var material = new THREE.MeshBasicMaterial();
+    var material = new THREE.MeshLambertMaterial();
     // material.vertexColors = THREE.FaceColors;
     // geometry.faces[0].color = new THREE.Color(1,0,0);
     material.vertexColors = THREE.VertexColors;
     geometry.faces[0].vertexColors.push(new THREE.Color(1,0,0));
     geometry.faces[0].vertexColors.push(new THREE.Color(0,1,0));
     geometry.faces[0].vertexColors.push(new THREE.Color(0,0,1));
+    geometry.computeFaceNormals();
     var triangle = new THREE.Mesh( geometry, material );
     scene.add( triangle );
+
+    var light = new THREE.PointLight(0xffffff);
+    light.position.set(1,1,100);
+    scene.add(light);
 
     loop();
 
