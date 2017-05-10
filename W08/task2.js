@@ -25,20 +25,20 @@ function main(flag)
     var material;
     if(flag){
     material = new THREE.ShaderMaterial({
-            vertexColors: THREE.VertexColors,
-            vertexShader: document.getElementById('gourand_lambert.vert').text,
-            fragmentShader: document.getElementById('gourand.frag').text,
-            uniforms: {
-                light_position: {type: 'v3', value: light.position},
-                camera_direction: {type: 'v3', value: camera.position}
-            }
-        });
+        vertexColors: THREE.VertexColors,
+        vertexShader: document.getElementById('phong.vert').text,
+        fragmentShader: document.getElementById('phong_lambert.frag').text,
+        uniforms: {
+            light_position: {type: 'v3', value: light.position},
+            camera_direction: {type: 'v3', value: camera.position}
+        }
+    });
     }
     else{
         material = new THREE.ShaderMaterial({
             vertexColors: THREE.VertexColors,
-            vertexShader: document.getElementById('gourand_phone.vert').text,
-            fragmentShader: document.getElementById('gourand.frag').text,
+            vertexShader: document.getElementById('phong.vert').text,
+            fragmentShader: document.getElementById('phong_phong.frag').text,
             uniforms: {
                 light_position: {type: 'v3', value: light.position},
                 camera_direction: {type: 'v3', value: camera.position}
