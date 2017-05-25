@@ -1,3 +1,5 @@
+
+
 function main()
 {
     var volume = new KVS.LobsterData();
@@ -12,8 +14,10 @@ function main()
     var bounds = Bounds( volume );
     screen.scene.add( bounds );
 
+    screen.light.color.setHex(0xff0000);
+
     var isovalue = 128;
-    var surfaces = Isosurfaces( volume, isovalue );
+    var surfaces = Isosurfaces( volume, isovalue, screen.camera, screen.light);
     screen.scene.add( surfaces );
 
     document.addEventListener( 'mousemove', function() {

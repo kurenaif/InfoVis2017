@@ -17,11 +17,31 @@ function get_color_map(){
     return cmap;
 }
 
-function Isosurfaces( volume, isovalue )
+function Isosurfaces( volume, isovalue, camera, light)
 {
     var cmap = get_color_map();
+    var phongShader = THREE.ShaderLib.phong;
+    var uniforms = THREE.UniformsUtils.clone(phongShader.uniforms);
     var geometry = new THREE.Geometry();
-    var material = new THREE.MeshLambertMaterial();
+    // var material = new THREE.MeshLambertMaterial();
+    /*var material = new THREE.ShaderMaterial({
+    uniforms: uniforms,
+    vertexShader: phongShader.vertexShader,
+    fragmentShader: phongShader.fragmentShader,
+    lights:true,
+    fog: true
+    });*/
+    var color = new THREE.Color( GetColor(isovalue,0,255,cmap));
+   var material = new THREE.ShaderMaterial({
+    vertexColors: THREE.VertexColors,
+    vertexShader: document.getElementById('phong.vert').text,
+    fragmentShader: document.getElementById('phong_phong.frag').text,
+    uniforms: {
+        light_position: {type: 'v3', value: light.position},
+        camera_direction: {type: 'v3', value: camera.position},
+        my_color: {type: 'v3', value: color}
+    }
+    });
 
     var smin = volume.min_value;
     var smax = volume.max_value;
@@ -76,6 +96,10 @@ function Isosurfaces( volume, isovalue )
                     geometry.vertices.push( v01 );
                     geometry.vertices.push( v23 );
                     geometry.vertices.push( v45 );
+
+                    geometry.colors.push(new THREE.Color(0xff0000));
+                    geometry.colors.push(new THREE.Color(0xff0000));
+                    geometry.colors.push(new THREE.Color(0xff0000));
 
                     var id0 = counter++;
                     var id1 = counter++;

@@ -18,6 +18,7 @@ function main()
 
     document.addEventListener( 'mousemove', function() {
         screen.light.position.copy( screen.camera.position );
+        console.log(screen.material)
     });
 
     window.addEventListener( 'resize', function() {
