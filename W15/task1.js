@@ -1,7 +1,11 @@
+var surfaces;
+var volume;
+var screen;
+
 function main()
 {
-    var volume = new KVS.LobsterData();
-    var screen = new KVS.THREEScreen();
+    volume = new KVS.LobsterData();
+    screen = new KVS.THREEScreen();
 
     screen.init( volume, {
         width: window.innerWidth * 0.8,
@@ -12,18 +16,26 @@ function main()
     var bounds = Bounds( volume );
     screen.scene.add( bounds );
 
-    var isovalue = 128;
-    var surfaces = Isosurfaces( volume, isovalue );
-    screen.scene.add( surfaces );
 
     document.addEventListener( 'mousemove', function() {
         screen.light.position.copy( screen.camera.position );
-        console.log(screen.material)
     });
 
     window.addEventListener( 'resize', function() {
         screen.resize( [ window.innerWidth * 0.8, window.innerHeight ] );
     });
 
+    var isovalue = 50;
+    surfaces = Isosurfaces( volume, isovalue, screen.light, screen.camera );
+    screen.scene.add( surfaces );
+
     screen.loop();
+}
+
+function update_isovalue(isovalue)
+{
+    screen.scene.remove(surfaces);
+
+    surfaces = Isosurfaces( volume, isovalue );
+    screen.scene.add( surfaces );
 }

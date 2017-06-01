@@ -9,18 +9,92 @@
 	<script src="http://naohisas.github.io/KVS.js/Build/KVS.min.js"></script>
 	<script src="http://naohisas.github.io/KVS.js/Build/KVS2THREE.min.js"></script>
 	<script src="http://naohisas.github.io/KVS.js/Source/KVSLobsterData.js"></script>
+  <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/cupertino/jquery-ui.min.css" />
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 	<script src="Bounds.js"></script>
 	<script src="Isosurfaces_task1.js"></script>
 	<script src="task1.js"></script>
+
+	<script type="x-shader/x-vertex" id="phong.vert">
+   varying vec3 point_color;
+   varying vec4 point_position;
+   varying vec3 normal_vector;
+   uniform vec3 light_position;
+   uniform vec3 camera_direction;
+   uniform vec3 my_color;
+
+	 void main()
+	 {
+	     point_position = modelViewMatrix * vec4( position, 1.0 );
+       normal_vector = normalMatrix * normal;
+       point_color = my_color;
+       gl_Position = projectionMatrix * point_position;
+	 }
+	</script>
+    <script type="x-shader/x-fragment" id="phong_phong.frag">
+    varying vec3 point_color;
+    varying vec4 point_position;
+    varying vec3 normal_vector;
+    uniform vec3 light_position;
+    uniform vec3 camera_direction;
+
+    vec3 PhongReflection(vec3 C, vec3 L, vec3 N)
+    {
+        float ka = 0.2;
+        float kd = 0.6;
+        float ks = 1.0;
+        float n = 50.0;
+        vec3 V = normalize(camera_direction);
+
+        vec3 R = reflect(-L, N);
+        float dd = max(dot(N,L), 0.0);
+        float ds = pow(max(dot(R,V), 0.0), n);
+        if (dd <= 0.0) {ds = 0.0;}
+
+        float Ia = ka;
+        float Id = kd * dd;
+        float Is = ks * ds;
+        return C*(Ia+Id+Is);
+    }
+
+    void main()
+    {
+        vec3 C = point_color;
+        vec3 L = normalize(light_position - point_position.xyz);
+        vec3 N = normalize(normal_vector);
+
+        vec3 shaded_color = PhongReflection(C,L,N);
+        gl_FragColor = vec4( shaded_color, 1.0 );
+    }
+	</script>
+
+
   <div id="display" style="width: 80%; float: left;"></div>
   <div id="controller" style="width:20%; float:left;">
+      isovalue: <input id="num" type="text" size="3" readonly />
+      <div id="slider"></div>
       <label id="label" style="font-family:Arial;"></label>
-      <input type="range" min="0" max="1" step="0.01" value="0.5" id="isovalue"/>
-      <button id="change-isovalue-button" style="font-family=Arial;">
-          Apply</button>
   </div>
 	<script>
 	 main();
 	</script>
+  <script type="text/javascript">
+   $(function() {
+       $('#slider').slider({
+           min: 0,
+           max: 255,
+           step: 1,
+           value: 50,
+           change: function(e, ui) {
+               $('#num').val(ui.value);
+               update_isovalue(ui.value);
+           },
+           create: function(e, ui) {
+               $('#num').val($(this).slider('option', 'value'));
+           }
+       });
+   });
+  </script>
     </body>
 </html>

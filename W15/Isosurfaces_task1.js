@@ -17,9 +17,22 @@ function get_color_map(){
     return cmap;
 }
 
-function Isosurfaces( volume, isovalue )
+function Isosurfaces( volume, isovalue)
 {
+    var camera = screen.camera;
+    var light = screen.light;
     var cmap = get_color_map();
+    var color = new THREE.Color( GetColor(isovalue,0,255,cmap));
+    var material = new THREE.ShaderMaterial({
+        vertexColors: THREE.VertexColors,
+        vertexShader: document.getElementById('phong.vert').text,
+        fragmentShader: document.getElementById('phong_phong.frag').text,
+        uniforms: {
+            light_position: {type: 'v3', value: light.position},
+            camera_direction: {type: 'v3', value: camera.position},
+            my_color: {type: 'v3', value: color}
+        }
+    });
     var geometry = new THREE.Geometry();
     var material = new THREE.MeshLambertMaterial();
 
