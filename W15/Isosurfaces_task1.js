@@ -34,7 +34,7 @@ function Isosurfaces( volume, isovalue)
         }
     });
     var geometry = new THREE.Geometry();
-    var material = new THREE.MeshLambertMaterial();
+    // var material = new THREE.MeshLambertMaterial();
 
     var smin = volume.min_value;
     var smax = volume.max_value;

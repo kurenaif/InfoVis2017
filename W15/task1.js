@@ -1,6 +1,10 @@
 var surfaces;
 var volume;
 var screen;
+var shade = "phong";
+var refrection = "phong";
+var isovalue;
+var colorName = "blue2red";
 
 function main()
 {
@@ -26,16 +30,35 @@ function main()
     });
 
     var isovalue = 50;
-    surfaces = Isosurfaces( volume, isovalue, screen.light, screen.camera );
+    surfaces = Isosurfaces( volume, isovalue, "phong.vert", "phong_phong.frag", "blue2red");
     screen.scene.add( surfaces );
 
     screen.loop();
 }
 
-function update_isovalue(isovalue)
+function update_isovalue(isovalue_, shade_, refrection_, colorName_)
 {
+    if(shade_ == "") shade_ = shade;
+    if(refrection_ == "") refrection_ = refrection;
+    if(colorName_ == "") colorName_ = colorName;
+    if(isovalue_ < 0) isovalue_ = isovalue;
     screen.scene.remove(surfaces);
+    surfaces.geometry.dispose();
+    surfaces.material.dispose();
 
-    surfaces = Isosurfaces( volume, isovalue );
+    var vert, frag;
+    if(shade_ == "phong"){
+        vert = "phong.vert";
+        if(refrection_ == "phong") frag = "phong_phong.frag"
+        if(refrection_ == "lambert") frag = "phong_lambert.frag"
+    }
+
+    if(shade_ == "gourand"){
+        frag = "gourand.frag"
+        if(refrection_ == "phong") vert = "gourand_phong.vert";
+        if(refrection_ == "lambert") vert = "gourand_lambert.vert";
+    }
+
+    surfaces = Isosurfaces( volume, isovalue_, vert, frag, colorName_);
     screen.scene.add( surfaces );
 }
