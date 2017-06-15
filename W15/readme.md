@@ -32,9 +32,10 @@ jQueryのsliderで実装している． バーを離したタイミングで更�
 バーの背景色はisovalueに対応した色となっており，その色がザリガニの色に反映される．
 バーの背景色はバーを離さなくても，スライダーを動かしている状態で色が変化し，そのisovalueに対応した色を教えてくれる．
 
-**バーをドラックしている時**
+##### バーをドラックしている時
 ![](./isovalue2.png)
-**バーを話した時**
+
+##### バーを離した時
 ![](./isovalue3.png)
 
 ## Shading
@@ -51,9 +52,10 @@ shadingの設定を行うことができる．phongはphong refrection, lambert 
 
 ラジオボタンが押されたときに変更が反映される．
 
-**phong refrection**
+##### phong refrection
 ![](./phong_ref.png)
-**lambert refrection**
+
+##### lambert refrection
 ![](./lambert_ref.png)
 
 ## Color Bar
@@ -63,7 +65,7 @@ color_barの設定を行う． 選択肢としては，授業で取り扱った 
 
 ラジオボタンを選択した時に自動的に反映が行われる(isovalueの下のバーの色も反映される).
 
-**color_barを変更した例**
+##### color_barを変更した例
 ![](./color_bar_ex.png)
 
 # その他実装について
